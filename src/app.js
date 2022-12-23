@@ -12,15 +12,21 @@ const books = [
 ];
 
 const app = express();
-
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
     res.status(200).send('Node.js Course');
 });
 
-app.get('/books', (req, res) => {
+app.get('/books', (_req, res) => {
     res.status(200).json(books);
+});
+
+app.post('/books', (req, res) => {
+    const book = req.body;
+
+    books.push(book);
+    res.status(201).send('Book created with success!');
 });
 
 export default app;
