@@ -1,20 +1,7 @@
 import express from 'express';
+
 import db from './config/dbConnect.js';
-
-const books = [
-    {
-        id: 1,
-        title: 'Lord of the rings, The',
-    },
-    {
-        id: 2,
-        title: 'Hobbit, The',
-    },
-];
-
-const searchBook = (id) => {
-    return books.findIndex((book) => book.id == id);
-};
+import books from './models/Book.model.js';
 
 db.on('error', console.log.bind(console, 'Connection error'));
 db.once('open', () => console.log('DB connection ok'));
@@ -27,7 +14,9 @@ app.get('/', (_req, res) => {
 });
 
 app.get('/books', (_req, res) => {
-    res.status(200).json(books);
+    books.find((err, books) => {
+        res.status(200).json(books);
+    });
 });
 
 app.get('/books/:id', (req, res) => {
