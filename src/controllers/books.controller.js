@@ -1,4 +1,5 @@
 import books from '../models/Book.model.js';
+import publishers from '../models/Publisher.model.js';
 
 class BookController {
     static getBooks = (req, res) => {
@@ -27,11 +28,12 @@ class BookController {
             });
     };
 
-    static getBooksByPublisher = (req, res) => {
-        const { publisher } = req.query;
+    static getBooksByPublisher = async (req, res) => {
+        const publisherName = req.query.publisher;
+        const publisherId = await publishers.find({ name: publisherName }, {});
 
         books
-            .find({ publisher }, {})
+            .find({ publisher: publisherId }, {})
             .populate(['author', 'publisher'])
             .exec((err, books) => {
                 res.status(200).send(books);
