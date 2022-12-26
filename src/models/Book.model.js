@@ -9,11 +9,13 @@ const bookSchema = new mongoose.Schema({
         required: true,
     },
     author: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'authors',
         required: true,
     },
     publisher: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'publishers',
         required: true,
     },
     pages: {
